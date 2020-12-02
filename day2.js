@@ -1,3 +1,5 @@
+const utils = require('./utils')
+
 function parseLine (line) {
   const groups = line.match(/(\d+)-(\d+) (\w): (.*)/)
   return {
@@ -8,9 +10,23 @@ function parseLine (line) {
   }
 }
 
-function part1 (input) {
-  const data = this.parseLine(input)
-  return data
+function countChars (pwd, char) {
+  let n = 0
+  for (const c of pwd) {
+    if (c === char) {
+      n = n + 1
+    }
+  }
+  return n
 }
 
-module.exports = { parseLine, part1 }
+function part1 (input) {
+  console.log('start')
+  return input.map(line => {
+    const { min, max, char, pwd } = this.parseLine(line)
+    const nChars = this.countChars(pwd, char)
+    return nChars >= min && nChars <= max
+  }).reduce((result, nextBool) => result + Number(nextBool), 0)
+}
+
+module.exports = { parseLine, countChars, part1 }

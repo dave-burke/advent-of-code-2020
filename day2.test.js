@@ -19,3 +19,7 @@ test('parseLine identifies parts of input', () => {
     pwd: 'abc',
   })
 })
+
+test('countChars counts instances of a char in a string', () => {
+  expect(day2.countChars('abcabc', 'a')).toBe(2)
+})
