@@ -21,7 +21,6 @@ function countChars (pwd, char) {
 }
 
 function part1 (input) {
-  console.log('start')
   return input.map(line => {
     const { min, max, char, pwd } = this.parseLine(line)
     const nChars = this.countChars(pwd, char)
@@ -29,4 +28,12 @@ function part1 (input) {
   }).reduce((result, nextBool) => result + Number(nextBool), 0)
 }
 
-module.exports = { parseLine, countChars, part1 }
+function part2 (input) {
+  return input.map(line => {
+    const { min, max, char, pwd } = this.parseLine(line)
+    return (pwd.charAt(min - 1) === char && pwd.charAt(max - 1) !== char) ||
+      (pwd.charAt(min - 1) !== char && pwd.charAt(max - 1) === char)
+  }).reduce((result, nextBool) => result + Number(nextBool), 0)
+}
+
+module.exports = { parseLine, countChars, part1, part2 }

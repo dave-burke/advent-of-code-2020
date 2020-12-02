@@ -10,6 +10,15 @@ test('part1 counts invalid passwords', () => {
   expect(day2.part1(testInput)).toBe(2)
 })
 
+test('part2 checks char position', () => {
+  const testInput = [
+    '1-3 a: abcde',
+    '1-3 b: cdefg',
+    '2-9 c: ccccccccc',
+  ]
+  expect(day2.part2(testInput)).toBe(1)
+})
+
 test('parseLine identifies parts of input', () => {
   const testInput = '1-3 a: abc'
   expect(day2.parseLine(testInput)).toStrictEqual({
