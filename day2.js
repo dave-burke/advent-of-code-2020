@@ -1,9 +1,16 @@
-const utils = require('./utils')
-
-function part1 (input) {
-  return input
+function parseLine (line) {
+  const groups = line.match(/(\d+)-(\d+) (\w): (.*)/)
+  return {
+    min: Number(groups[1]),
+    max: Number(groups[2]),
+    char: groups[3],
+    pwd: groups[4],
+  }
 }
 
-utils.readInput('day2.txt').then((input) => part1(input)).then(console.log)
+function part1 (input) {
+  const data = this.parseLine(input)
+  return data
+}
 
-module.exports = { part1 }
+module.exports = { parseLine, part1 }
