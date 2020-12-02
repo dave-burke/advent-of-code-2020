@@ -1,9 +1,9 @@
-const { readFile } = require('fs')
 const utils = require('./utils')
 
-async function part1 () {
-  const data = await utils.readInput('day2.txt')
-  console.log(data)
+function part1 (input) {
+  return input
 }
 
-part1()
+utils.readInput('day2.txt').then((input) => part1(input)).then(console.log)
+
+module.exports = { part1 }

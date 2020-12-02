@@ -13,4 +13,12 @@ module.exports = {
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
   },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      env: { jest: true },
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended'],
+    },
+  ],
 }
