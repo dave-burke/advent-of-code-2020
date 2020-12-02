@@ -199,42 +199,42 @@ const input = [
   1895,
   1765,
   1572
-];
+]
 
-function part1() {
-  for(let i = 0; i < input.length; i++){
-    console.log(i);
-    for(let j = i + 1; j < input.length; j ++) {
-      a = input[i];
-      b = input[j];
-      if(a + b === 2020) {
-        console.log(`${a} + ${b} = 2020. ${a} * ${b} = ${a * b}`);
-        return;
+function part1 () {
+  for (let i = 0; i < input.length; i++) {
+    console.log(i)
+    for (let j = i + 1; j < input.length; j++) {
+      a = input[i]
+      b = input[j]
+      if (a + b === 2020) {
+        console.log(`${a} + ${b} = 2020. ${a} * ${b} = ${a * b}`)
+        return
       }
     }
   }
 }
-function part2() {
-  for(let i = 0; i < input.length; i++){
-    console.log(i);
-    for(let j = 0; j < input.length; j ++) {
-      for(let k = 0; k < input.length; k++) {
-        if(i === j || j === k || k === i) {
-          continue;
+function part2 () {
+  for (let i = 0; i < input.length; i++) {
+    console.log(i)
+    for (let j = 0; j < input.length; j++) {
+      for (let k = 0; k < input.length; k++) {
+        if (i === j || j === k || k === i) {
+          continue
         }
-        a = input[i];
-        b = input[j];
-        c = input[k];
-        if(a + b + c === 2020) {
-          console.log(`${a} + ${b} + ${c} = 2020. ${a} * ${b} * ${c} = ${a * b * c}`);
-          return;
+        const a = input[i]
+        const b = input[j]
+        const c = input[k]
+        if (a + b + c === 2020) {
+          console.log(`${a} + ${b} + ${c} = 2020. ${a} * ${b} * ${c} = ${a * b * c}`)
+          return
         }
       }
     }
   }
 }
 
-console.log(`Checking ${input.length} input values`);
-//part1();
-part2();
-console.log('done!');
+console.log(`Checking ${input.length} input values`)
+// part1();
+part2()
+console.log('done!')
