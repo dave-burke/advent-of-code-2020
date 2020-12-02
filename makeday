@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+if [[ $# -ne 1 ]]; then
+  exit 1
+fi
+
+dayNum=${1}
+
+cp -v template.js "day${dayNum}.js"
+cp -v template.test.js "day${dayNum}.test.js"
+sed -i "s/template/day${dayNum}/g" "day${dayNum}.test.js"
+touch "day${dayNum}.txt"
