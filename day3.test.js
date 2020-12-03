@@ -3,9 +3,19 @@ const day3 = require('./day3')
 
 test('part1', () => {
   const testInput = [
-    'a',
+    '..##.......',
+    '#...#...#..',
+    '.#....#..#.',
+    '..#.#...#.#',
+    '.#...##..#.',
+    '..#.##.....',
+    '.#.#.#....#',
+    '.#........#',
+    '#.##...#...',
+    '#...##....#',
+    '.#..#...#.#',
   ]
-  expect(day3.part1(testInput)).toBe(testInput)
+  expect(day3.part1(testInput)).toBe(7)
 })
 
 test('part2', () => {
