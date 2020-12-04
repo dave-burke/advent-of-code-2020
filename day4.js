@@ -23,19 +23,31 @@ const isValidField = function (field) {
     case ('eyr'):
       return value >= 2020 && value <= 2030
     case ('hgt'):
-      return true // TODO 150-193cm or 59-76in
+    {
+      const n = Number(value.substring(0, value.length - 2))
+      if (value.endsWith('cm')) {
+        return n >= 150 && n <= 193
+      } else if (value.endsWith('in')) {
+        return n >= 59 && n <= 76
+      } else {
+        return false
+      }
+    }
     case ('hcl'):
-      return true // TODO a # followed by exactly six characters 0-9 or a-f
+      return /^#[0-9a-f]{6}$/.test(value)
     case ('ecl'):
-      return true // TODO exactly one of: amb blu brn gry grn hzl oth.
+      return ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
+        .some(validValue => value === validValue)
     case ('pid'):
-      return true // TODOa nine-digit number, including leading zeroes.
-    default:
+      return /\d{9}/.test(value)
+    case ('cid'):
       return true
+    default:
+      return false
   }
 }
 const allFieldsValid = function (passport) {
-  return fields.every(field => isValidField(field))
+  return passport.split(/\s/).every(field => isValidField(field))
 }
 function part1 (input) {
   const passports = input.split('\n\n')
