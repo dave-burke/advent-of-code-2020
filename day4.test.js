@@ -1,16 +1,24 @@
 const { expect, test } = require('@jest/globals')
 const day4 = require('./day4')
 
+const input = `ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+byr:1937 iyr:2017 cid:147 hgt:183cm
+
+iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
+hcl:#cfa07d byr:1929
+
+hcl:#ae17e1 iyr:2013
+eyr:2024
+ecl:brn pid:760753108 byr:1931
+hgt:179cm
+
+hcl:#cfa07d eyr:2025 pid:166559648
+iyr:2011 ecl:brn hgt:59in`
+
 test('part1', () => {
-  const testInput = [
-    'a',
-  ]
-  expect(day4.part1(testInput)).toBe(testInput)
+  expect(day4.part1(input)).toBe(2)
 })
 
 test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day4.part2(testInput)).toBe(testInput)
+  expect(day4.part2(input)).toBe(input)
 })
