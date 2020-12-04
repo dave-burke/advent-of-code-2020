@@ -51,3 +51,66 @@ eyr:2022
 iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719`
   expect(day4.part2(invalidInput)).toBe(4)
 })
+
+describe('validators', () => {
+  describe('byr', () => {
+    const validator = day4.validators.byr
+    test('byr accepts valid', () => {
+      expect(validator('2002')).toBe(true)
+    })
+    test('byr accepts invalid', () => {
+      expect(validator('2003')).toBe(false)
+    })
+    test('byr rejects 19210', () => {
+      expect(validator('19210')).toBe(false)
+    })
+    test('byr rejects non-numeric', () => {
+      expect(validator('abc')).toBe(false)
+    })
+  })
+  describe('hgt', () => {
+    const validator = day4.validators.hgt
+    test('hgt accepts 60in', () => {
+      expect(validator('60in')).toBe(true)
+    })
+    test('hgt accepts 190cm', () => {
+      expect(validator('190cm')).toBe(true)
+    })
+    test('hgt rejects 190in', () => {
+      expect(validator('190in')).toBe(false)
+    })
+    test('hgt rejects 190', () => {
+      expect(validator('190')).toBe(false)
+    })
+  })
+  describe('hcl', () => {
+    const validator = day4.validators.hcl
+    test('hcl accepts valid values', () => {
+      expect(validator('#123abc')).toBe(true)
+    })
+    test('hcl rejects non-hex letters', () => {
+      expect(validator('#123abz')).toBe(false)
+    })
+    test('hcl rejects missing pound sign', () => {
+      expect(validator('123abc')).toBe(false)
+    })
+  })
+  describe('ecl', () => {
+    const validator = day4.validators.ecl
+    test('ecl accepts brn', () => {
+      expect(validator('brn')).toBe(true)
+    })
+    test('ecl rejects wat', () => {
+      expect(validator('wat')).toBe(false)
+    })
+  })
+  describe('pid', () => {
+    const validator = day4.validators.pid
+    test('pid accepts 9 digits', () => {
+      expect(validator('000000001')).toBe(true)
+    })
+    test('pid rejects 10 digits', () => {
+      expect(validator('0123456789')).toBe(false)
+    })
+  })
+})
