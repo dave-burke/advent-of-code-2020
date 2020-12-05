@@ -40,6 +40,10 @@ function part1 (input) {
 
 function part2 (input) {
   return input
+    .map(seat => new Ticket(seat))
+    .map(ticket => Number(ticket.id))
+    .sort((a, b) => a - b)
+    .find((id, i, arr) => i !== 0 && arr[i] - arr[i - 1] !== 1) - 1
 }
 
 module.exports = { part1, part2, Ticket }

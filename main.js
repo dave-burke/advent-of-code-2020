@@ -17,5 +17,5 @@ const day5 = require('./day5')
 // utils.readInputRaw('day4.txt').then((input) => day4.part2(input)).then(result => console.log(`Done: ${result}`))
 
 // Day 5
-utils.readInput('day5.txt').then((input) => day5.part1(input)).then(result => console.log(`Done: ${result}`))
-// utils.readInput('day4.txt').then((input) => day4.part2(input)).then(result => console.log(`Done: ${result}`))
+// utils.readInput('day5.txt').then((input) => day5.part1(input)).then(result => console.log(`Done: ${result}`))
+utils.readInput('day5.txt').then((input) => day5.part2(input)).then(result => console.log(`Done: ${result}`))

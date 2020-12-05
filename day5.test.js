@@ -28,10 +28,3 @@ test('part1', () => {
   ]
   expect(day5.part1(testInput)).toBe(820)
 })
-
-test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day5.part2(testInput)).toBe(testInput)
-})
