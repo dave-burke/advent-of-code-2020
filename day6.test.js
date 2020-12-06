@@ -1,16 +1,26 @@
 const { expect, test } = require('@jest/globals')
 const day6 = require('./day6')
 
+const testInput = `abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b`
+
 test('part1', () => {
-  const testInput = [
-    'a',
-  ]
-  expect(day6.part1(testInput)).toBe(testInput)
+  expect(day6.part1(testInput)).toBe(11)
 })
 
 test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day6.part2(testInput)).toBe(testInput)
+  expect(day6.part2(testInput)).toBe(6)
 })
