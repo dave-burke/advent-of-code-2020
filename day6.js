@@ -1,6 +1,6 @@
 const getDistinctChars = function (group) {
   return group
-    .replaceAll(/\s/g, '').split('')
+    .replace(/\s/g, '').split('')
     .reduce((distinct, next) => distinct.add(next), new Set())
 }
 function part1 (input) {
