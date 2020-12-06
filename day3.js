@@ -11,7 +11,6 @@ const checkSlope = function (input, moveRight, moveDown) {
     right = (right + moveRight) % matrix[down].length
     down += moveDown
   }
-  console.log(matrix.map(row => row.join('')).join('\n'))
   return nTrees
 }
 function part1 (input) {
