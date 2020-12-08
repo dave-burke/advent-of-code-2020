@@ -1,3 +1,10 @@
+class InfiniteLoopError extends Error {
+  constructor (currentState, nextState) {
+    super(`Tried to step to prior index ${nextState.index} when accumulator was ${currentState.index}`)
+    this.currentState = currentState
+    this.nextState = nextState
+  }
+}
 class Instruction {
   constructor (command, amount) {
     this.command = command
@@ -14,8 +21,8 @@ class State {
 
   step () {
     const nextState = this.apply(this.program[this.index])
-    if (history.some(priorState => priorState.index === nextState.index)) {
-      throw new Error(`Tried to step to prior index ${nextState.index} when accumulator was ${this.accumulator}`)
+    if (this.history.some(priorState => priorState.index === nextState.index)) {
+      throw new InfiniteLoopError(this, nextState)
     }
     return nextState
   }
@@ -42,8 +49,16 @@ const parseLine = function (line) {
 function part1 (input) {
   const program = input.map(line => parseLine(line))
   let state = new State(program, 0, 0, [])
-  while (true) {
-    state = state.step()
+  try {
+    while (true) {
+      state = state.step()
+    }
+  } catch (err) {
+    if (err instanceof InfiniteLoopError) {
+      return err.currentState.index
+    } else {
+      throw err
+    }
   }
 }
 
