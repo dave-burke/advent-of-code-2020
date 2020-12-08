@@ -8,7 +8,7 @@ class InfiniteLoopError extends Error {
 class Instruction {
   constructor (command, amount) {
     this.command = command
-    this.amount = amount
+    this.amount = Number(amount)
   }
 }
 class State {
