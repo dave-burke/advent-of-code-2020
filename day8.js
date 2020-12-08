@@ -64,7 +64,7 @@ function part1 (input) {
     }
   } catch (err) {
     if (err instanceof InfiniteLoopError) {
-      return err.currentState.index
+      return err.currentState.accumulator
     } else {
       throw err
     }
