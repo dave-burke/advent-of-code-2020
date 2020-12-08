@@ -5,21 +5,20 @@ const parseLine = function (line) {
       const regex = /^(?<n>\d+) (?<color>[a-z ]+)$/
       const match = regex.exec(refSpec)
       if (match === null) {
-        console.log(`'${refSpec}' does not match ${regex}`)
-        return { color, refs: [] }
+        return null // expected for '...contain no other bags.'
       }
       return {
         n: Number(match.groups.n),
         color: match.groups.color,
       }
     })
+    .filter(ref => ref != null)
   return {
     color,
     refs,
   }
 }
 
-// (Array<Ref<n,color>>, String, Map<color, Array<Ref<n,color>>>): Array<Ref<n,color>>
 const findBagPath = function (currentPath, destColor, bagMap) {
   const currentRef = currentPath[currentPath.length - 1]
   if (currentRef.color === destColor) {
@@ -58,8 +57,22 @@ function part1 (input) {
   return validPaths
 }
 
+// bags = Map<color, Array<Ref<n, color>>
+function countBags (color, bags) {
+  let nBags = 0
+  const refs = bags.get(color)
+  for (const ref of refs) {
+    nBags = nBags + ref.n + (ref.n * countBags(ref.color, bags))
+  }
+  return nBags
+}
+
 function part2 (input) {
-  return input
+  const bags = input
+    .map(line => parseLine(line))
+    .reduce((result, next) => result.set(next.color, next.refs), new Map())
+
+  return countBags('shiny gold', bags)
 }
 
 module.exports = { part1, part2 }
