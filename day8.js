@@ -55,24 +55,56 @@ const parseLine = function (line) {
   return new Instruction(match[1], match[2])
 }
 
+function runProgram (program) {
+  let state = new State(program, 0, 0, [])
+  while (state.index < program.length) {
+    state = state.step()
+  }
+  return state
+}
+
 function part1 (input) {
   const program = input.map(line => parseLine(line))
-  let state = new State(program, 0, 0, [])
   try {
-    while (true) {
-      state = state.step()
-    }
+    const finalState = runProgram(program)
+    return finalState.accumulator
   } catch (err) {
-    if (err instanceof InfiniteLoopError) {
-      return err.currentState.accumulator
-    } else {
-      throw err
-    }
+    console.log(err)
+    return err.currentState.accumulator
   }
 }
 
+function copyProgram (program) {
+  return program.map(instruction => new Instruction(instruction.command, instruction.amount))
+}
+
 function part2 (input) {
-  return input
+  const program = input.map(line => parseLine(line))
+
+  for (let i = 0; i < program.length; i++) {
+    const copy = copyProgram(program)
+    switch (copy[i].command) {
+      case ('nop'):
+        copy[i].command = 'jmp'
+        try {
+          const result = runProgram(copy)
+          return result.accumulator
+        } catch (err) {
+          continue
+        }
+      case ('jmp'):
+        copy[i].command = 'nop'
+        try {
+          const result = runProgram(copy)
+          return result.accumulator
+        } catch (err) {
+          continue
+        }
+      default:
+        continue
+    }
+  }
+  return null
 }
 
 module.exports = { part1, part2 }
