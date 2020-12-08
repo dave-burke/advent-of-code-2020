@@ -10,6 +10,10 @@ class Instruction {
     this.command = command
     this.amount = Number(amount)
   }
+
+  toString () {
+    return `${this.command}(${this.amount})`
+  }
 }
 class State {
   constructor (program, index, accumulator, history) {
@@ -24,7 +28,12 @@ class State {
     if (this.history.some(priorState => priorState.index === nextState.index)) {
       throw new InfiniteLoopError(this, nextState)
     }
+    console.log(nextState.toString())
     return nextState
+  }
+
+  toString () {
+    return `${this.program[this.index].toString()}: ${this.accumulator}`
   }
 
   apply (instruction) {
