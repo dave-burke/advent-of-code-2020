@@ -43,7 +43,7 @@ class State {
 
 const parseLine = function (line) {
   const match = /(\w+) ([+-]\d+)/.exec(line)
-  return new Instruction(match.groups[1], match.groups[2])
+  return new Instruction(match[1], match[2])
 }
 
 function part1 (input) {
