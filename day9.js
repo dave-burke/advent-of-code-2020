@@ -41,7 +41,10 @@ function forEachPair (input, callback) {
   for (let i = 0; i < input.length; i++) {
     for (let j = i + 1; j < input.length; j++) {
       const pair = [input[i], input[j]]
-      callback(pair, i, j, input)
+      const cont = callback(pair, i, j, input)
+      if (cont === false) {
+        return
+      }
     }
   }
 }
@@ -52,11 +55,13 @@ function checkSum (range, expected) {
 }
 
 function findInvalidRange (input, invalidNumber) {
+  const numbers = input.map(Number)
   let result = null
-  forEachPair(input, ([a, b], i, j) => {
-    const range = input.slice(i, j + 1)
+  forEachPair(numbers, ([a, b], i, j) => {
+    const range = numbers.slice(i, j + 1)
     if (checkSum(range, invalidNumber)) {
       result = range
+      return false
     }
   })
   return result
