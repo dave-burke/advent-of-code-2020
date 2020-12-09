@@ -1,12 +1,9 @@
+const { forEachPair } = require('./utils')
+
 function computeSums (input) {
   const result = []
-  for (let i = 0; i < input.length; i++) {
-    for (let j = i + 1; j < input.length; j++) {
-      const a = Number(input[i])
-      const b = Number(input[j])
-      result.push(a + b)
-    }
-  }
+  const numbers = input.map(Number)
+  forEachPair(numbers, (a, b) => result.push(a + b))
   return result
 }
 function computeRecentSums (input, start, end) {
@@ -37,18 +34,6 @@ function part1 (input) {
   return checkInputPart1(input, 25)
 }
 
-function forEachPair (input, callback) {
-  for (let i = 0; i < input.length; i++) {
-    for (let j = i + 1; j < input.length; j++) {
-      const pair = [input[i], input[j]]
-      const cont = callback(pair, i, j, input)
-      if (cont === false) {
-        return
-      }
-    }
-  }
-}
-
 function checkSum (range, expected) {
   const sum = range.reduce((a, b) => a + b, 0)
   return sum === expected
@@ -57,7 +42,7 @@ function checkSum (range, expected) {
 function findInvalidRange (input, invalidNumber) {
   const numbers = input.map(Number)
   let result = null
-  forEachPair(numbers, ([a, b], i, j) => {
+  forEachPair(numbers, (a, b, i, j) => {
     const range = numbers.slice(i, j + 1)
     if (checkSum(range, invalidNumber)) {
       result = range
