@@ -39,6 +39,14 @@ test('part1', () => {
   expect(day9.checkInputPart1(testInput, 5)).toBe(127)
 })
 
-test('part2', () => {
-  expect(day9.part2(testInput)).toBe(62)
+describe('part2', () => {
+  test('checkSum', () => {
+    expect(day9.checkSum([15, 25, 47, 40])).toEqual(true)
+  })
+  test('findInvalidRange', () => {
+    expect(day9.findInvalidRange(testInput, 127)).toEqual([15, 25, 47, 40])
+  })
+  test('sample input', () => {
+    expect(day9.checkInputPart2(testInput, 5)).toBe(62)
+  })
 })

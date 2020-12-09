@@ -37,9 +37,40 @@ function part1 (input) {
   return checkInputPart1(input, 25)
 }
 
-function part2 (input) {
-  const invalidNumber = part1(input)
-  return null
+function forEachPair (input, callback) {
+  for (let i = 0; i < input.length; i++) {
+    for (let j = i + 1; j < input.length; j++) {
+      const pair = [input[i], input[j]]
+      callback(pair, i, j, input)
+    }
+  }
 }
 
-module.exports = { part1, part2, computeSums, computeRecentSums, checkInputPart1 }
+function checkSum (range, expected) {
+  const sum = range.reduce((a, b) => a + b, 0)
+  return sum === expected
+}
+
+function findInvalidRange (input, invalidNumber) {
+  let result = null
+  forEachPair(input, ([a, b]) => {
+    const range = input.slice(a, b)
+    if (checkSum(range, invalidNumber)) {
+      result = range
+    }
+  })
+  return result
+}
+
+function checkInputPart2 (input, preambleLength) {
+  const invalidNumber = checkInputPart1(input, preambleLength)
+  const invalidRange = findInvalidRange(input, invalidNumber)
+  const smallest = invalidRange.reduce((a, b) => Math.min(a, b), Infinity)
+  const biggest = invalidRange.reduce((a, b) => Math.max(a, b), -Infinity)
+  return smallest + biggest
+}
+function part2 (input) {
+  return checkInputPart2(input, 25)
+}
+
+module.exports = { part1, part2, computeSums, computeRecentSums, checkInputPart1, checkSum, findInvalidRange, checkInputPart2 }
