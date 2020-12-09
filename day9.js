@@ -38,7 +38,8 @@ function part1 (input) {
 }
 
 function part2 (input) {
-  return input
+  const invalidNumber = part1(input)
+  return null
 }
 
 module.exports = { part1, part2, computeSums, computeRecentSums, checkInputPart1 }
