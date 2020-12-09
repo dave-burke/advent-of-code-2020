@@ -53,8 +53,8 @@ function checkSum (range, expected) {
 
 function findInvalidRange (input, invalidNumber) {
   let result = null
-  forEachPair(input, ([a, b]) => {
-    const range = input.slice(a, b)
+  forEachPair(input, ([a, b], i, j) => {
+    const range = input.slice(i, j + 1)
     if (checkSum(range, invalidNumber)) {
       result = range
     }
