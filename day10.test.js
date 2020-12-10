@@ -22,9 +22,11 @@ describe('part1', () => {
   })
 })
 
-test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day10.part2(testInput)).toBe(testInput)
+describe('part2', () => {
+  test('small example', () => {
+    expect(day10.part2(smallInput)).toBe(8)
+  })
+  test('large example', () => {
+    expect(day10.part2(largeInput)).toBe(19208)
+  })
 })
