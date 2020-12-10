@@ -1,28 +1,14 @@
 function part1 (input) {
-  const sorted = input.sort((a, b) => a - b)
+  const sorted = input.map(Number).sort((a, b) => a - b)
   sorted.unshift(0) // outlet
   sorted.push(sorted[sorted.length - 1] + 3) // device adapter
-  const processed = sorted.reduce((result, cur, i, arr) => {
-    const next = {
-      prev: cur,
-      nOnes: result.nOnes,
-      nThrees: result.nThrees,
-    }
-    if (result.prev !== undefined) {
-      if (result.prev - next.prev === 1) {
-        next.nOnes++
-      }
-      if (result.prev - next.prev === 3) {
-        next.nThrees++
-      }
-    }
-    return next
-  }, {
-    prev: undefined,
-    nOnes: 0,
-    nThrees: 0,
-  })
-  return processed.nOnes * processed.nThrees
+  const diffs = []
+  for (let i = 0; i < sorted.length - 1; i++) {
+    diffs.push(sorted[i + 1] - sorted[i])
+  }
+  const nOnes = diffs.filter(diff => diff === 1).length
+  const nThrees = diffs.filter(diff => diff === 3).length
+  return nOnes * nThrees
 }
 
 function part2 (input) {
