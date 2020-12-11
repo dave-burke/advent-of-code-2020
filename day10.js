@@ -29,8 +29,10 @@ function part2 (input) {
   const groupArrangements = groups.map(subgroup => {
     if (subgroup.length < 3) {
       return 1
-    } else {
+    } else if (subgroup.length < 4) {
       return Math.pow(2, subgroup.length - 2)
+    } else {
+      /* I have no idea what to do here */
     }
   }).reduce((a, b) => a * b, 1)
   return groupArrangements
