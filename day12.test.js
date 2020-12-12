@@ -17,8 +17,8 @@ describe('ship', () => {
   ${'E'} | ${-270} | ${'S'}
   `('$start + $deg = $end', ({ start, deg, end }) => {
     const ship = new Ship()
-    ship.turn(90)
-    expect(ship.direction).toBe('N')
+    ship.turn(deg)
+    expect(ship.direction).toBe(end)
   })
   test('turns result in valid degrees', () => {
     const ship = new Ship()
