@@ -15,8 +15,8 @@ function getNeighbors (seats, y, x) {
   ]
   return neighborCoords
     .filter(neighbor =>
-      neighbor[0] >= 0 && neighbor[0] < seats[y].length &&
-      neighbor[1] >= 0 && neighbor[1] < seats.length)
+      neighbor[0] >= 0 && neighbor[0] < seats.length &&
+      neighbor[1] >= 0 && neighbor[1] < seats[y].length)
     .map(coords => seats[coords[0]][coords[1]])
 }
 
