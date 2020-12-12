@@ -26,20 +26,17 @@ describe('ship', () => {
     expect(ship.direction).toBe('E')
   })
 })
+const testInput = [
+  'F10',
+  'N3',
+  'F7',
+  'R90',
+  'F11',
+]
 test('part1', () => {
-  const testInput = [
-    'F10',
-    'N3',
-    'F7',
-    'R90',
-    'F11',
-  ]
   expect(day12.part1(testInput)).toBe(25)
 })
 
 test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day12.part2(testInput)).toBe(testInput)
+  expect(day12.part2(testInput)).toBe(286)
 })

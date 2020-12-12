@@ -1,11 +1,11 @@
 /*
-    Action N means to move north by the given value.
-    Action S means to move south by the given value.
-    Action E means to move east by the given value.
-    Action W means to move west by the given value.
-    Action L means to turn left the given number of degrees.
-    Action R means to turn right the given number of degrees.
-    Action F means to move forward by the given value in the direction the ship is currently facing.
+Action N means to move north by the given value.
+Action S means to move south by the given value.
+Action E means to move east by the given value.
+Action W means to move west by the given value.
+Action L means to turn left the given number of degrees.
+Action R means to turn right the given number of degrees.
+Action F means to move forward by the given value in the direction the ship is currently facing.
 
 The ship starts by facing east. Only the L and R actions change the direction the ship is facing. (That is, if the ship is facing east and the next instruction is N10, the ship would move north 10 units, but would still move east if the following action were F.)
 */
@@ -62,6 +62,17 @@ function part1 (input) {
   return ship.manhattanDistance
 }
 
+/*
+Action N means to move the waypoint north by the given value.
+Action S means to move the waypoint south by the given value.
+Action E means to move the waypoint east by the given value.
+Action W means to move the waypoint west by the given value.
+Action L means to rotate the waypoint around the ship left (counter-clockwise) the given number of degrees.
+Action R means to rotate the waypoint around the ship right (clockwise) the given number of degrees.
+Action F means to move forward to the waypoint a number of times equal to the given value.
+
+The waypoint starts 10 units east and 1 unit north relative to the ship. The waypoint is relative to the ship; that is, if the ship moves, the waypoint moves with it.
+*/
 function part2 (input) {
   return input
 }
