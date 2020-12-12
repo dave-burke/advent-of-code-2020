@@ -20,6 +20,11 @@ describe('ship', () => {
     ship.turn(90)
     expect(ship.direction).toBe('N')
   })
+  test('turns result in valid degrees', () => {
+    const ship = new Ship()
+    ship.turn(360)
+    expect(ship.direction).toBe('E')
+  })
 })
 test('part1', () => {
   const testInput = [

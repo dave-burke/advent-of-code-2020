@@ -50,6 +50,8 @@ class Ship {
 
   turn (amount) {
     this.degrees += amount
+    if (this.degrees < 0) this.degrees += 360
+    if (this.degrees >= 360) this.degrees -= 360
   }
 }
 function part1 (input) {
