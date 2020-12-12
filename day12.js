@@ -44,10 +44,6 @@ class Ship {
     if (heading === 'W') this.x -= amount
   }
 
-  drive (amount) {
-    this.move(this.direction, amount)
-  }
-
   turn (amount) {
     this.degrees += amount
     if (this.degrees < 0) this.degrees += 360
@@ -73,8 +69,78 @@ Action F means to move forward to the waypoint a number of times equal to the gi
 
 The waypoint starts 10 units east and 1 unit north relative to the ship. The waypoint is relative to the ship; that is, if the ship moves, the waypoint moves with it.
 */
+class Waypoint {
+  constructor (ship2, initX, initY) {
+    this.directions = ['E', 'S', 'W', 'N']
+    this.x = ship2.x + initX
+    this.y = ship2.y + initY
+  }
+
+  navigate (instruction) {
+    const { op, arg } = instruction
+      .match(/(?<op>[NSEWFLR])(?<arg>\d+)/).groups
+    const amount = Number(arg)
+    if (this.directions.includes(op)) {
+      this.move(op, amount)
+    }
+    if (op === 'L') this.rotate((-amount) + 360)
+    if (op === 'R') this.rotate(amount)
+  }
+
+  move (heading, amount) {
+    if (heading === 'N') this.y += amount
+    if (heading === 'S') this.y -= amount
+    if (heading === 'E') this.x += amount
+    if (heading === 'W') this.x -= amount
+  }
+
+  rotate (degrees) {
+    switch (degrees) {
+      case 90:
+        [this.x, this.y] = [this.y, -this.x]
+        break
+      case 180:
+        [this.x, this.y] = [-this.x, -this.y]
+        break
+      case 270:
+        [this.x, this.y] = [-this.y, this.x]
+        break
+      default:
+        break
+    }
+  }
+}
+
+class Ship2 {
+  constructor () {
+    this.x = 0
+    this.y = 0
+  }
+
+  get manhattanDistance () {
+    return Math.abs(this.x) + Math.abs(this.y)
+  }
+
+  navigate (instruction, waypoint) {
+    const { op, arg } = instruction
+      .match(/(?<op>[NSEWFLR])(?<arg>\d+)/).groups
+    const amount = Number(arg)
+    if (op === 'F') this.move(waypoint, amount)
+  }
+
+  move (waypoint, amount) {
+    this.x += (waypoint.x * amount)
+    this.y += (waypoint.y * amount)
+  }
+}
 function part2 (input) {
-  return input
+  const ship = new Ship2()
+  const waypoint = new Waypoint(ship, 10, 1)
+  for (const instruction of input) {
+    waypoint.navigate(instruction)
+    ship.navigate(instruction, waypoint)
+  }
+  return ship.manhattanDistance
 }
 
 module.exports = { part1, part2, Ship }
