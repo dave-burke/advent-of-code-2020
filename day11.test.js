@@ -87,9 +87,35 @@ test('part1', () => {
   expect(day11.part1(step0)).toBe(37)
 })
 
+describe('countNeighbors2', () => {
+  test('should find neighbors in all directions', () => {
+    const allNeighbors = day11.parse([
+      '.......#.',
+      '...#.....',
+      '.#.......',
+      '.........',
+      '..#L....#',
+      '....#....',
+      '.........',
+      '#........',
+      '...#.....',
+    ])
+    expect(day11.countNeightbors2(allNeighbors, 4, 3)).toBe(8)
+  })
+  test('should find neighbors in no directions', () => {
+    const noNeighbors = day11.parse([
+      '.##.##.',
+      '#.#.#.#',
+      '##...##',
+      '...L...',
+      '##...##',
+      '#.#.#.#',
+      '.##.##.',
+    ])
+    expect(day11.countNeightbors2(noNeighbors, 3, 3)).toBe(0)
+  })
+})
+
 test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day11.part2(testInput)).toBe(testInput)
+  expect(day11.part2(step0)).toBe(26)
 })
