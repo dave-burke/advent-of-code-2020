@@ -18,15 +18,17 @@ class Ship {
   }
 
   get direction () {
-    return this.direction(Math.floor(this.degrees / 90))
+    return this.directions[(Math.floor(this.degrees / 90))]
   }
 
   get manhattanDistance () {
-    return Math.abs(this.x) * Math.abs(this.y)
+    return Math.abs(this.x) + Math.abs(this.y)
   }
 
   navigate (instruction) {
-    const [op, amount] = instruction.match(/([NSEWFLR])(\d+)/).groups
+    const { op, arg } = instruction
+      .match(/(?<op>[NSEWFLR])(?<arg>\d+)/).groups
+    const amount = Number(arg)
     if (this.directions.includes(op)) {
       this.move(op, amount)
     }
@@ -36,17 +38,17 @@ class Ship {
   }
 
   move (heading, amount) {
-    if (heading === 'N') this.y++
-    if (heading === 'S') this.y--
-    if (heading === 'E') this.x++
-    if (heading === 'W') this.x--
+    if (heading === 'N') this.y += amount
+    if (heading === 'S') this.y -= amount
+    if (heading === 'E') this.x += amount
+    if (heading === 'W') this.x -= amount
   }
 
   drive (amount) {
     this.move(this.direction, amount)
   }
 
-  turn (degrees, amount) {
+  turn (amount) {
     this.degrees += amount
   }
 }
@@ -62,4 +64,4 @@ function part2 (input) {
   return input
 }
 
-module.exports = { part1, part2 }
+module.exports = { part1, part2, Ship }
