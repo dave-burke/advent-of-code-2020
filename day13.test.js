@@ -3,9 +3,10 @@ const day13 = require('./day13')
 
 test('part1', () => {
   const testInput = [
-    'a',
+    '939',
+    '7,13,x,x,59,x,31,19',
   ]
-  expect(day13.part1(testInput)).toBe(testInput)
+  expect(day13.part1(testInput)).toBe(295)
 })
 
 test('part2', () => {
