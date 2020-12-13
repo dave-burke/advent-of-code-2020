@@ -1,5 +1,5 @@
 const day = 13
-const part = 1
+const part = 2
 
 const utils = require('./utils')
 const solution = require(`./day${day}`)
