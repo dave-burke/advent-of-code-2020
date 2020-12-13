@@ -25,10 +25,7 @@ function part2 (input) {
       const duration = (now.getTime() - start.getTime()) / 1000
       console.log(`${now.toISOString()}: ${check} in ${duration} seconds`)
     }
-    if (sortedDescendingBuses.every(bus => {
-      const wait = (Math.ceil(check / bus.id) * bus.id) - check
-      return (wait === bus.i)
-    })) {
+    if (sortedDescendingBuses.every(bus => (check + bus.i) % bus.id === 0)) {
       result = i
       break
     }
