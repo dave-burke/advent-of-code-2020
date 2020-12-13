@@ -13,11 +13,19 @@ function part2 (input) {
     if (id === 'x') return undefined
     return { id, i }
   }).filter(bus => bus !== undefined)
-  const checkBus = buses[0]
+  const checkBus = buses.shift()
+  const sortedDescendingBuses = buses.sort((a, b) => b.id - a.id)
   let result
+  const start = new Date()
+  console.log(start.toISOString())
   for (let i = 1; i < Infinity; i++) {
     const check = checkBus.id * i
-    if (buses.every(bus => {
+    if (i % 1_000_000_000 === 0) {
+      const now = new Date()
+      const duration = (now.getTime() - start.getTime()) / 1000
+      console.log(`${now.toISOString()}: ${check} in ${duration} seconds`)
+    }
+    if (sortedDescendingBuses.every(bus => {
       const wait = (Math.ceil(check / bus.id) * bus.id) - check
       return (wait === bus.i)
     })) {
