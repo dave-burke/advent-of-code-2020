@@ -1,5 +1,13 @@
 function applyMask (value, mask) {
-  return value
+  const result = []
+  for (let i = 0; i < value.length; i++) {
+    if (mask[i] === 'X') {
+      result.push(value[i])
+    } else {
+      result.push(mask[i])
+    }
+  }
+  return result.join('')
 }
 function part1 (input) {
   return input
