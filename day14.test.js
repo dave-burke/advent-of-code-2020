@@ -10,11 +10,22 @@ describe('part1', () => {
     expect(Computer.btod('1001001')).toBe(73)
   })
   test('step1', () => {
-    const computer = new Computer()
-    expect(computer.applyMask(
+    expect(Computer.applyMask(
       '000000000000000000000000000000001011',
       'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X'))
       .toBe('000000000000000000000000000001001001')
+  })
+  test('step2', () => {
+    expect(Computer.applyMask(
+      '000000000000000000000000000001100101',
+      'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X'))
+      .toBe('000000000000000000000000000001100101')
+  })
+  test('step3', () => {
+    expect(Computer.applyMask(
+      '000000000000000000000000000000000000',
+      'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X'))
+      .toBe('000000000000000000000000000001000000')
   })
   test('input', () => {
     const testInput = [

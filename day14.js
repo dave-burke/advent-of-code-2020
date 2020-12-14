@@ -7,15 +7,15 @@ class Computer {
 
   applyInstruction (line) {
     if (line.startsWith('mask = ')) {
-      this.mask = line.subString(7)
+      this.mask = line.substring(7)
     } else {
-      const [address, decimalValue] = line.match(/mem\[(\d+)\] = (\d+)/).groups
+      const { address, decimalValue } = line.match(/mem\[(?<address>\d+)\] = (?<decimalValue>\d+)/).groups
       this.updateMemory(address, decimalValue)
     }
   }
 
   updateMemory (address, decimalValue) {
-    const binaryValue = this.dtob(decimalValue)
+    const binaryValue = Computer.dtob(decimalValue)
     const maskedBinary = Computer.applyMask(binaryValue, this.mask)
     const maskedDecimal = Computer.btod(maskedBinary)
     this.mem.set(address, maskedDecimal)
@@ -43,7 +43,12 @@ class Computer {
 }
 
 function part1 (input) {
-  return input
+  const computer = new Computer()
+  for (const line of input) {
+    computer.applyInstruction(line)
+  }
+  return Array.from(computer.mem.values())
+    .reduce((a, b) => a + b, 0)
 }
 
 function part2 (input) {
