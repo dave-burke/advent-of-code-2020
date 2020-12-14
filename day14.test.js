@@ -40,7 +40,9 @@ describe('part1', () => {
 
 test('part2', () => {
   const testInput = [
-    'b',
+    'mask = 000000000000000000000000000000X1001X',
+    'mem[42] = 100',
+    'mask = 00000000000000000000000000000000X0XX',
+    'mem[26] = 1',
   ]
-  expect(day14.part2(testInput)).toBe(testInput)
-})
+  expect(day14.part2(testInput)).toBe(208)
