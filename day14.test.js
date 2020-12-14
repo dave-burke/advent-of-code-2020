@@ -1,9 +1,19 @@
 const { expect, test } = require('@jest/globals')
+const { Computer } = require('./day14')
 const day14 = require('./day14')
 
 describe('part1', () => {
+  test('dtob', () => {
+    const computer = new Computer()
+    expect(computer.dtob(73)).toBe('1001001')
+  })
+  test('btod', () => {
+    const computer = new Computer()
+    expect(computer.btod('1001001')).toBe(73)
+  })
   test('step1', () => {
-    expect(day14.applyMask(
+    const computer = new Computer()
+    expect(computer.applyMask(
       '000000000000000000000000000000001011',
       'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X'))
       .toBe('000000000000000000000000000001001001')
