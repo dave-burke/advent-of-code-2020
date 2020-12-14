@@ -5,15 +5,22 @@ class Computer {
     this.mem = new Map()
   }
 
-  dtob (decimalValue) {
+  updateMemory (address, decimalValue) {
+    const binaryValue = this.dtob(decimalValue)
+    const maskedBinary = Computer.applyMask(binaryValue, this.mask)
+    const maskedDecimal = Computer.btod(maskedBinary)
+    this.mem.set(address, maskedDecimal)
+  }
+
+  static dtob (decimalValue) {
     return Number(decimalValue).toString(2)
   }
 
-  btod (binaryValue) {
+  static btod (binaryValue) {
     return parseInt(binaryValue, 2)
   }
 
-  applyMask (valueBits, mask) {
+  static applyMask (valueBits, mask) {
     const result = []
     for (let i = 0; i < valueBits.length; i++) {
       if (mask[i] === 'X') {
@@ -25,6 +32,7 @@ class Computer {
     return result.join('')
   }
 }
+
 function part1 (input) {
   return input
 }

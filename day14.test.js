@@ -4,12 +4,10 @@ const day14 = require('./day14')
 
 describe('part1', () => {
   test('dtob', () => {
-    const computer = new Computer()
-    expect(computer.dtob(73)).toBe('1001001')
+    expect(Computer.dtob(73)).toBe('1001001')
   })
   test('btod', () => {
-    const computer = new Computer()
-    expect(computer.btod('1001001')).toBe(73)
+    expect(Computer.btod('1001001')).toBe(73)
   })
   test('step1', () => {
     const computer = new Computer()
