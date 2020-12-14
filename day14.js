@@ -85,11 +85,42 @@ class Computer2 {
     // TODO apply mask to address and return permutations for all X values
     // permutations are every binary value 0 -> nX^2
     // e.g. for 4 Xs, it is every binary value from 0 to 4^2=16
+    const result = []
+    for (let i = 0; i < address.length; i++) {
+      if (this.mask[i] === 'X') {
+        result.push('X')
+      } else if (this.mask[i] === '1') {
+        result.push(1)
+      } else {
+        result.push(address[i])
+      }
+    }
+    const nX = result.filter(bit => bit === 'X').length
+    const nPermutations = Math.pow(nX, 2)
+    const permutations = []
+    for (let i = 0; i < nPermutations; i++) {
+      const replacementBits = Computer2.dtob(i)
+      const permutation = []
+      for (let j = 0; j < result.length; j++) {
+        if (result[j] === 'X') {
+          permutation.push(replacementBits.shift())
+        } else {
+          permutation.push(result[j])
+        }
+      }
+      permutations.push(permutation.join(''))
+    }
+    return permutations
   }
 }
 
 function part2 (input) {
-  return input
+  const computer = new Computer2()
+  for (const line of input) {
+    computer.applyInstruction(line)
+  }
+  return Array.from(computer.mem.values())
+    .reduce((a, b) => a + b, 0)
 }
 
 module.exports = { part1, part2, Computer }

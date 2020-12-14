@@ -46,3 +46,4 @@ test('part2', () => {
     'mem[26] = 1',
   ]
   expect(day14.part2(testInput)).toBe(208)
+})
