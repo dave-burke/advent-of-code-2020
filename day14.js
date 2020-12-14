@@ -5,6 +5,15 @@ class Computer {
     this.mem = new Map()
   }
 
+  applyInstruction (line) {
+    if (line.startsWith('mask = ')) {
+      this.mask = line.subString(7)
+    } else {
+      const [address, decimalValue] = line.match(/mem\[(\d+)\] = (\d+)/).groups
+      this.updateMemory(address, decimalValue)
+    }
+  }
+
   updateMemory (address, decimalValue) {
     const binaryValue = this.dtob(decimalValue)
     const maskedBinary = Computer.applyMask(binaryValue, this.mask)
