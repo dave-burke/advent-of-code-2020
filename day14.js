@@ -16,7 +16,8 @@ class Computer {
 
   updateMemory (address, decimalValue) {
     const binaryValue = Computer.dtob(decimalValue)
-    const maskedBinary = Computer.applyMask(binaryValue, this.mask)
+    const paddedBinary = binaryValue.padStart(36, '0')
+    const maskedBinary = Computer.applyMask(paddedBinary, this.mask)
     const maskedDecimal = Computer.btod(maskedBinary)
     this.mem.set(address, maskedDecimal)
   }
