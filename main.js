@@ -1,4 +1,4 @@
-const day = 13
+const day = 14
 const part = 2
 
 const utils = require('./utils')
