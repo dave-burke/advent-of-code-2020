@@ -70,19 +70,18 @@ class Computer2 {
     if (line.startsWith('mask = ')) {
       this.mask = line.substring(7)
     } else {
-      const { address, binaryValue } = line.match(/mem\[(?<address>\d+)\] = (?<binaryValue>\d+)/).groups
-      this.updateMemory(address, binaryValue)
+      const { address, decimalValue } = line.match(/mem\[(?<address>\d+)\] = (?<decimalValue>\d+)/).groups
+      this.updateMemory(address, decimalValue)
     }
   }
 
-  updateMemory (decimalAddress, binaryValue) {
-    const decimalValue = Computer2.btod(binaryValue)
-    for (const permutationAddress of this.applyMask(decimalAddress)) {
-      this.mem.set(permutationAddress, decimalValue)
+  updateMemory (decimalAddress, decimalValue) {
+    for (const permutationAddress of this.maskAddress(decimalAddress)) {
+      this.mem.set(permutationAddress, Number(decimalValue))
     }
   }
 
-  applyMask (decimalAddress) {
+  maskAddress (decimalAddress) {
     // TODO apply mask to address and return permutations for all X values
     // permutations are every binary value 0 -> nX^2
     // e.g. for 4 Xs, it is every binary value from 0 to 4^2=16
