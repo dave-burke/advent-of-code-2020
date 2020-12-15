@@ -25,9 +25,4 @@ describe('part1', () => {
   })
 })
 
-test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day15.part2(testInput)).toBe(testInput)
-})
+// Part 2 tests take a while (relatively) and aren't materially different from the part1 tests
