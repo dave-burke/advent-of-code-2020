@@ -1,14 +1,11 @@
-/*
-Track Map<Number, Array<turnNumbers>>
-*/
-function part1 (input) {
+function solve (input, iterations) {
   const turns = input.split(',').map(Number)
   const memory = new Map()
   for (let i = 0; i < turns.length; i++) {
     memory.set(turns[i], [i])
   }
 
-  for (let i = turns.length; i < 2020; i++) {
+  for (let i = turns.length; i < iterations; i++) {
     const lastNumber = turns[turns.length - 1]
     const priorTurns = memory.get(lastNumber)
 
@@ -29,9 +26,12 @@ function part1 (input) {
   }
   return turns[turns.length - 1]
 }
+function part1 (input) {
+  return solve(input, 2020)
+}
 
 function part2 (input) {
-  return input
+  return solve(input, 30_000_000)
 }
 
 module.exports = { part1, part2 }
