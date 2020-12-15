@@ -75,31 +75,34 @@ class Computer2 {
     }
   }
 
-  updateMemory (rawAddress, binaryValue) {
-    for (const address of this.applyMask(rawAddress)) {
-      this.mem.set(address, binaryValue)
+  updateMemory (decimalAddress, binaryValue) {
+    const decimalValue = Computer2.btod(binaryValue)
+    for (const permutationAddress of this.applyMask(decimalAddress)) {
+      this.mem.set(permutationAddress, decimalValue)
     }
   }
 
-  applyMask (address) {
+  applyMask (decimalAddress) {
     // TODO apply mask to address and return permutations for all X values
     // permutations are every binary value 0 -> nX^2
     // e.g. for 4 Xs, it is every binary value from 0 to 4^2=16
+    const binaryAddress = Computer2.dtob(decimalAddress)
+      .padStart(36, '0')
     const result = []
-    for (let i = 0; i < address.length; i++) {
+    for (let i = 0; i < binaryAddress.length; i++) {
       if (this.mask[i] === 'X') {
         result.push('X')
       } else if (this.mask[i] === '1') {
         result.push(1)
       } else {
-        result.push(address[i])
+        result.push(binaryAddress[i])
       }
     }
     const nX = result.filter(bit => bit === 'X').length
-    const nPermutations = Math.pow(nX, 2)
+    const nPermutations = Math.pow(2, nX)
     const permutations = []
     for (let i = 0; i < nPermutations; i++) {
-      const replacementBits = Computer2.dtob(i)
+      const replacementBits = Computer2.dtob(i).padStart(nX, '0').split('')
       const permutation = []
       for (let j = 0; j < result.length; j++) {
         if (result[j] === 'X') {
@@ -110,7 +113,7 @@ class Computer2 {
       }
       permutations.push(permutation.join(''))
     }
-    return permutations
+    return permutations.map(Computer2.btod)
   }
 }
 
