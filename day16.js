@@ -29,6 +29,7 @@ function part1 (input) {
 }
 
 function part2 (input) {
+  /* Parse input */
   const [fieldsSection, yourTicketSection, nearbyTicketsSection] = input.split('\n\n')
   const fields = fieldsSection
     .split('\n')
@@ -50,6 +51,7 @@ function part2 (input) {
     .slice(1)
     .map(ticketLine => ticketLine.split(',').map(Number))
 
+  /* Validate tickets */
   function isValidForRanges (value, ranges) {
     return ranges.some(range => value >= range.min && value <= range.max)
   }
@@ -62,20 +64,37 @@ function part2 (input) {
 
   const nearbyValidTickets = nearbyTickets.filter(ticket => isValidTicket(ticket, fields))
 
+  /* Identify columns */
   const nFields = yourTicket.length
-  const fieldNameOrder = []
+  // Initialize candidate arrays
+  const fieldCandidates = new Map()
+  for (const field of fields) {
+    fieldCandidates.set(field.fieldName, [])
+  }
+  // Find matches
   for (let fieldIndex = 0; fieldIndex < nFields; fieldIndex++) {
     const nearbyValues = nearbyValidTickets.map(ticket => ticket[fieldIndex])
     // Check each field to see if any match all
     // tickets at this index
     for (const fieldSpec of fields) {
       if (nearbyValues.every(value => isValidForRanges(value, fieldSpec.ranges))) {
-        fieldNameOrder.push(fieldSpec.fieldName)
-        break
+        fieldCandidates.get(fieldSpec.fieldName).push(fieldIndex)
       }
     }
   }
-  return fieldNameOrder
+
+  /* Narrow down matches */
+  const fieldOrder = []
+  while (fieldCandidates.size > 0) {
+    for (const [fieldName, possibleColumns] of fieldCandidates) {
+      const remainingPossibilities = possibleColumns.filter(index => fieldOrder[index] === undefined)
+      if (remainingPossibilities.length === 1) {
+        fieldOrder[remainingPossibilities[0]] = fieldName
+        fieldCandidates.delete(fieldName)
+      }
+    }
+  }
+  return fieldOrder
 }
 
 module.exports = { part1, part2 }
