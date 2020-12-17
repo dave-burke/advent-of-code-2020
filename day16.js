@@ -94,7 +94,15 @@ function part2 (input) {
       }
     }
   }
-  return fieldOrder
+
+  /* Find the product of your departure fields */
+  let product = 1
+  for (let i = 0; i < fieldOrder.length; i++) {
+    if (fieldOrder[i].startsWith('departure')) {
+      product *= yourTicket[i]
+    }
+  }
+  return product
 }
 
 module.exports = { part1, part2 }
