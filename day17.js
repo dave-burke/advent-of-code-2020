@@ -37,20 +37,58 @@ class Point {
 class World {
   constructor (input) {
     this.active = new Map()
-    // TODO parse input and set values in map
+    const rows = input.map(row => row.split(''))
+    for (let y = 0; y < rows.length; y++) {
+      for (let x = 0; x < rows[y].length; x++) {
+        if (rows[y][x] === '#') {
+          this.active.set(new Point(x, y, 0), true)
+        }
+      }
+    }
   }
 
   isActive (point) {
     return this.active.has(point)
   }
 
+  extreme (field, comparator, initialValue) {
+    return Array.from(this.active.keys())
+      .reduce((a, b) => comparator(a[field], b[field]), initialValue)
+  }
+
+  get minX () { return this.extreme('x', Math.min, Infinity) }
+  get minY () { return this.extreme('y', Math.min, Infinity) }
+  get minZ () { return this.extreme('z', Math.min, Infinity) }
+  get maxX () { return this.extreme('x', Math.max, -Infinity) }
+  get maxY () { return this.extreme('y', Math.max, -Infinity) }
+  get maxZ () { return this.extreme('z', Math.max, -Infinity) }
+
   step () {
-    // TODO find min/max for xyz and compute those values +/- 1
-    // set or delete map entries based on active status
+    const newMap = new Map()
+    for (let x = this.minX - 1; x <= this.maxX + 1; x++) {
+      for (let y = this.minY - 1; y <= this.maxY + 1; y++) {
+        for (let z = this.minZ - 1; z <= this.maxZ + 1; z++) {
+          const point = new Point(x, y, z)
+          newMap.set(point, point.computeNextState(this))
+        }
+      }
+    }
+    this.active = newMap
+  }
+
+  get nActiveCells () {
+    return Array.from(this.active.values())
+      .filter(cell => cell === true)
+      .length
   }
 }
+
 function part1 (input) {
-  return input
+  const world = new World(input)
+  for (const i of [0, 1, 2, 3, 4, 5]) {
+    world.step()
+  }
+  return world.nActiveCells
 }
 
 function part2 (input) {
