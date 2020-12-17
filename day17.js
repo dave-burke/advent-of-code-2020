@@ -5,12 +5,22 @@ class Point {
     this.z = z
   }
 
+  toString () {
+    return [this.x, this.y, this.z].join(',')
+  }
+
+  static fromString (s) {
+    return new Point(...s.split(','))
+  }
+
   equals (other) {
     return this.x === other.x && this.y === other.y && this.z === other.z
   }
 
   computeNextState (world) {
-    const nActiveNeighbors = this.neighbors.filter(neighbor => world.isActive(neighbor))
+    const nActiveNeighbors = this.neighbors
+      .filter(neighbor => world.isActive(neighbor))
+      .length
     if (world.isActive(this)) {
       return nActiveNeighbors >= 2 && nActiveNeighbors <= 3
     } else {
@@ -20,10 +30,10 @@ class Point {
 
   get neighbors () {
     const neighbors = []
-    for (let x = -1; x < 2; x++) {
-      for (let y = -1; y < 2; y++) {
-        for (let z = -1; z < 2; z++) {
-          const neighbor = new Point(x, y, z)
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dz = -1; dz <= 1; dz++) {
+          const neighbor = new Point(this.x + dx, this.y + dy, this.z + dz)
           if (neighbor.equals(this)) {
             continue
           }
@@ -36,24 +46,27 @@ class Point {
 }
 class World {
   constructor (input) {
-    this.active = new Map()
+    this.active = new Set()
     const rows = input.map(row => row.split(''))
     for (let y = 0; y < rows.length; y++) {
       for (let x = 0; x < rows[y].length; x++) {
         if (rows[y][x] === '#') {
-          this.active.set(new Point(x, y, 0), true)
+          this.active.add(new Point(x, y, 0).toString())
         }
       }
     }
   }
 
   isActive (point) {
-    return this.active.has(point)
+    return this.active.has(point.toString())
   }
 
   extreme (field, comparator, initialValue) {
-    return Array.from(this.active.keys())
-      .reduce((a, b) => comparator(a[field], b[field]), initialValue)
+    const keys = Array.from(this.active.entries())
+    return keys
+      .map(entry => entry[0])
+      .map(Point.fromString)
+      .reduce((result, next) => comparator(result, next[field]), initialValue)
   }
 
   get minX () { return this.extreme('x', Math.min, Infinity) }
@@ -64,28 +77,29 @@ class World {
   get maxZ () { return this.extreme('z', Math.max, -Infinity) }
 
   step () {
-    const newMap = new Map()
+    const newSet = new Set()
     for (let x = this.minX - 1; x <= this.maxX + 1; x++) {
       for (let y = this.minY - 1; y <= this.maxY + 1; y++) {
         for (let z = this.minZ - 1; z <= this.maxZ + 1; z++) {
           const point = new Point(x, y, z)
-          newMap.set(point, point.computeNextState(this))
+          const nextState = point.computeNextState(this)
+          if (nextState === true) {
+            newSet.add(point.toString())
+          }
         }
       }
     }
-    this.active = newMap
+    this.active = newSet
   }
 
   get nActiveCells () {
-    return Array.from(this.active.values())
-      .filter(cell => cell === true)
-      .length
+    return this.active.size
   }
 }
 
 function part1 (input) {
   const world = new World(input)
-  for (const i of [0, 1, 2, 3, 4, 5]) {
+  for (let i = 0; i < 6; i++) {
     world.step()
   }
   return world.nActiveCells
