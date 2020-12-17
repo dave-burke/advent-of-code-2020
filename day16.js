@@ -30,28 +30,52 @@ function part1 (input) {
 
 function part2 (input) {
   const [fieldsSection, yourTicketSection, nearbyTicketsSection] = input.split('\n\n')
-  const fieldRanges = fieldsSection
+  const fields = fieldsSection
     .split('\n')
-    .reduce((map, next) => {
+    .reduce((arr, next) => {
       const [fieldName, numberSpec] = next.split(': ')
       const ranges = numberSpec.split(' or ')
         .map(spec => {
-          const [min, max] = spec.split('-')
+          const [min, max] = spec.split('-').map(Number)
           return { min, max }
         })
-      map.set(fieldName, ranges)
-      return map
-    }, new Map())
+      return [...arr, { fieldName, ranges }]
+    }, [])
   const yourTicket = yourTicketSection
     .split('\n')[1]
     .split(',')
+    .map(Number)
   const nearbyTickets = nearbyTicketsSection
     .split('\n')
     .slice(1)
-    .map(ticketLine => ticketLine.split(','))
+    .map(ticketLine => ticketLine.split(',').map(Number))
+
+  function isValidForRanges (value, ranges) {
+    return ranges.some(range => value >= range.min && value <= range.max)
+  }
+
+  function isValidTicket (ticket, fields) {
+    return ticket.every(value => {
+      return fields.some(field => isValidForRanges(value, field.ranges))
+    })
+  }
+
+  const nearbyValidTickets = nearbyTickets.filter(ticket => isValidTicket(ticket, fields))
 
   const nFields = yourTicket.length
-  return input
+  const fieldNameOrder = []
+  for (let fieldIndex = 0; fieldIndex < nFields; fieldIndex++) {
+    const nearbyValues = nearbyValidTickets.map(ticket => ticket[fieldIndex])
+    // Check each field to see if any match all
+    // tickets at this index
+    for (const fieldSpec of fields) {
+      if (nearbyValues.every(value => isValidForRanges(value, fieldSpec.ranges))) {
+        fieldNameOrder.push(fieldSpec.fieldName)
+        break
+      }
+    }
+  }
+  return fieldNameOrder
 }
 
 module.exports = { part1, part2 }
