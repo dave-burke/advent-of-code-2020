@@ -1,7 +1,7 @@
-const day = 16
+const day = 17
 const part = 2
 
 const utils = require('./utils')
 const solution = require(`./day${day}`)
 
-utils.readInputRaw(`day${day}.txt`).then((input) => solution[`part${part}`](input)).then(result => console.log(`Done: ${result}`))
+utils.readInput(`day${day}.txt`).then((input) => solution[`part${part}`](input)).then(result => console.log(`Done: ${result}`))
