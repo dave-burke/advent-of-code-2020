@@ -122,7 +122,7 @@ class Point4 {
   }
 
   equals (other) {
-    return this.x === other.x && this.y === other.y && this.z === other.z
+    return this.x === other.x && this.y === other.y && this.z === other.z && this.w === other.w
   }
 
   computeNextState (world) {
@@ -193,7 +193,7 @@ class World4 {
     for (let x = this.minX - 1; x <= this.maxX + 1; x++) {
       for (let y = this.minY - 1; y <= this.maxY + 1; y++) {
         for (let z = this.minZ - 1; z <= this.maxZ + 1; z++) {
-          for (let w = this.minW - 1; z <= this.maxW + 1; w++) {
+          for (let w = this.minW - 1; w <= this.maxW + 1; w++) {
             const point = new Point4(x, y, z, w)
             const nextState = point.computeNextState(this)
             if (nextState === true) {
@@ -213,9 +213,18 @@ class World4 {
 
 function part2 (input) {
   const world = new World4(input)
+  const start = new Date()
   for (let i = 0; i < 6; i++) {
+    console.log(i)
     world.step()
   }
+  const end = new Date()
+  const duration = end.getTime() - start.getTime()
+  const xLength = world.maxX - world.minX
+  const yLength = world.maxY - world.minY
+  const zLength = world.maxZ - world.minZ
+  const wLength = world.maxW - world.minW
+  console.log(`Finished in ${duration}ms. The world is ${xLength}x${yLength}x${zLength}x${wLength}}`)
   return world.nActiveCells
 }
 
