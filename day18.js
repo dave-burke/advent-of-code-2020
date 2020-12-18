@@ -1,4 +1,23 @@
 function solve (equation) {
+  const result = undefined
+  const op = undefined
+  const stack = []
+  for (const char of equation) {
+    switch (char) {
+      case ('('):
+        // what if this is the 1st char?
+        stack.push(result)
+        break
+      case (')'):
+        break
+      case ('+'):
+      case ('*'):
+        op = char
+        break
+      default:
+        break
+    }
+  }
   return 0
 }
 
