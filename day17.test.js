@@ -11,6 +11,7 @@ test('part1', () => {
   expect(day17.part1(testInput)).toBe(112)
 })
 
-test('part2', () => {
-  expect(day17.part2(testInput)).toBe(848)
-})
+// This takes 18 seconds(!) to run. The real input takes over a minute!
+// test('part2', () => {
+//   expect(day17.part2(testInput)).toBe(848)
+// })
