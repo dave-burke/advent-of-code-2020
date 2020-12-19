@@ -1,6 +1,6 @@
 function mapRules (ruleStrings) {
   return ruleStrings.map(ruleString => ruleString.split(': '))
-    .reduce((map, next) => map.set(next[0], next[1]), new Map())
+    .reduce((map, next) => map.set(Number(next[0]), next[1]), new Map())
 }
 function parseInput (rawInput) {
   const [rulesSpec, inputSpec] = rawInput.split('\n\n')
@@ -10,8 +10,32 @@ function parseInput (rawInput) {
   return [rules, inputs]
 }
 
+function testOption (allRules, option, input) {
+  if (option === '"a"') {
+    return [input.startsWith('a'), input.substring(1)]
+  } else if (option === '"b"') {
+    return [input.startsWith('b'), input.substring(1)]
+  } else {
+    const subrules = option.split(' ').map(Number)
+    let remainingInput = input
+    let isValid = true
+    for (const subrule of subrules) {
+      [isValid, remainingInput] = testInput(allRules, allRules.get(subrule), remainingInput)
+      if (!isValid) {
+        return [false, remainingInput]
+      }
+    }
+    if (remainingInput.length === 0) {
+      return [true, remainingInput]
+    }
+  }
+}
+
 function testInput (allRules, checkRule, input) {
-  // TODO
+  for (const option of checkRule.split(' | ')) {
+    const [isValid, remainingInput] = testOption(allRules, option, input)
+    if (isValid && remainingInput.length === 0) return true
+  }
   return false
 }
 

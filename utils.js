@@ -2,6 +2,12 @@ const fs = require('fs')
 
 module.exports = {
 
+  isNumeric: function (n) {
+    // NaN, Infinity, and -Infinity are not Finite
+    // and not numeric according to this
+    return isFinite(Number(n))
+  },
+
   readInputRaw: async function (file) {
     const promise = new Promise((resolve, reject) => {
       fs.readFile(file, 'utf8', function (err, data) {
