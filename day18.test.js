@@ -6,6 +6,14 @@ describe('part1', () => {
     expect(day18.part1(['1 + 2 * 3 + 4 * 5 + 6'])).toBe(71)
   })
 
+  test('1 + (2 * 3)', () => {
+    expect(day18.part1(['1 + (2 * 3)'])).toBe(7)
+  })
+
+  test('(1 + 2) * 3', () => {
+    expect(day18.part1(['(1 + 2) * 3'])).toBe(9)
+  })
+
   test('1 + (2 * 3) + (4 * (5 + 6))', () => {
     expect(day18.part1(['1 + (2 * 3) + (4 * (5 + 6))'])).toBe(51)
   })

@@ -1,30 +1,41 @@
+function apply (left, op, right) {
+  if (op === '+') {
+    return left + right
+  } else {
+    return left * right
+  }
+}
 function solve (equation) {
-  const result = undefined
-  const op = undefined
-  const stack = []
-  for (const char of equation) {
-    switch (char) {
-      case ('('):
-        // what if this is the 1st char?
-        stack.push(result)
-        break
-      case (')'):
-        break
-      case ('+'):
-      case ('*'):
-        op = char
-        break
-      default:
-        break
+  let result, op
+  while (equation.length > 0) {
+    const next = equation.shift()
+    if (isFinite(Number(next))) {
+      if (result === undefined) {
+        result = Number(next)
+      } else {
+        result = apply(result, op, Number(next))
+      }
+    } else if (next === '+' || next === '*') {
+      op = next
+    } else if (next === '(') {
+      let newResult
+      [newResult, equation] = solve(equation)
+      if (result === undefined) {
+        result = newResult
+      } else {
+        result = apply(result, op, newResult)
+      }
+    } else if (next === ')') {
+      return [result, equation]
     }
   }
-  return 0
+  return result
 }
 
 function part1 (input) {
   return input
-    .map(line => line.split(' '))
-    .map(solve)
+    .map(line => line.split('').filter(char => char !== ' '))
+    .map(equation => solve(equation))
     .reduce((a, b) => a + b, 0)
 }
 
