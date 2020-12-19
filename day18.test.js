@@ -35,9 +35,24 @@ describe('part1', () => {
   })
 })
 
-test('part2', () => {
-  const testInput = [
-    'b',
-  ]
-  expect(day18.part2(testInput)).toBe(testInput)
+describe('part2', () => {
+  test('1 + (2 * 3) + (4 * (5 + 6))', () => {
+    expect(day18.part2(['1 + (2 * 3) + (4 * (5 + 6))'])).toBe(51)
+  })
+
+  test('2 * 3 + (4 * 5)', () => {
+    expect(day18.part2(['2 * 3 + (4 * 5)'])).toBe(46)
+  })
+
+  test('5 + (8 * 3 + 9 + 3 * 4 * 3)', () => {
+    expect(day18.part2(['5 + (8 * 3 + 9 + 3 * 4 * 3)'])).toBe(1445)
+  })
+
+  test('5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))', () => {
+    expect(day18.part2(['5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))'])).toBe(669060)
+  })
+
+  test('((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2', () => {
+    expect(day18.part2(['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2'])).toBe(23340)
+  })
 })
