@@ -11,30 +11,19 @@ function parseInput (rawInput) {
 }
 
 function testOption (allRules, option, input) {
-  if (option === '"a"') {
-    return [input.startsWith('a'), input.substring(1)]
-  } else if (option === '"b"') {
-    return [input.startsWith('b'), input.substring(1)]
-  } else {
-    const subrules = option.split(' ').map(Number)
-    let remainingInput = input
-    let isValid = true
-    for (const subrule of subrules) {
-      [isValid, remainingInput] = testInput(allRules, allRules.get(subrule), remainingInput)
-      if (!isValid) {
-        return [false, remainingInput]
-      }
-    }
-    if (remainingInput.length === 0) {
-      return [true, remainingInput]
-    }
+  let prev
+  let check = option.split(' ')
+  while (prev !== check) {
+    prev = check
+    check = check.map(rule => rule.match(/"[ab]"/) ? rule[1] : allRules.get(Number(rule)))
   }
+  return check === input
 }
 
 function testInput (allRules, checkRule, input) {
   for (const option of checkRule.split(' | ')) {
-    const [isValid, remainingInput] = testOption(allRules, option, input)
-    if (isValid && remainingInput.length === 0) return true
+    const isValid = testOption(allRules, option, input)
+    if (isValid) return true
   }
   return false
 }
